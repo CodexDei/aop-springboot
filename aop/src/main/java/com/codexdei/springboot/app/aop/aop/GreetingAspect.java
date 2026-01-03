@@ -23,43 +23,40 @@ public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(* com.codexdei.springboot.app.aop.services.GreetingService.*(..))")
-    private void greetingLoggerPointcut(){}
-
     @Before("greetingLoggerPointcut()")
-    public void loggerBefore(JoinPoint joinPoint){
+    public void loggerBefore(JoinPoint joinPoint) {
 
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("BEFORE: " + method + " with the args: " + args);
     }
 
-    @After("greetingLoggerPointcut()")
-    public void loggerAfter(JoinPoint joinPoint){
+    @After("GreetingServicePointcuts.greetingLoggerPointcut()")
+    public void loggerAfter(JoinPoint joinPoint) {
 
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AFTER: " + method + " with the args: " + args);
     }
 
-    @AfterReturning("greetingLoggerPointcut()")
-    public void loggerAfterReturning(JoinPoint joinPoint){
+    @AfterReturning("GreetingServicePointcuts.greetingLoggerPointcut()")
+    public void loggerAfterReturning(JoinPoint joinPoint) {
 
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AFTER RETURNING: " + method + " with the args: " + args);
     }
 
-    @AfterThrowing("greetingLoggerPointcut()")
-    public void loggerAfterThrowing(JoinPoint joinPoint){
+    @AfterThrowing("GreetingServicePointcuts.greetingLoggerPointcut()")
+    public void loggerAfterThrowing(JoinPoint joinPoint) {
 
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AFTER THROWING: " + method + " with the args: " + args);
     }
 
-    @Around("greetingLoggerPointcut()")
-    public Object loggerAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+    @Around("GreetingServicePointcuts.greetingLoggerPointcut()")
+    public Object loggerAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         String method = proceedingJoinPoint.getSignature().getName();
         String args = Arrays.toString(proceedingJoinPoint.getArgs());
@@ -67,10 +64,10 @@ public class GreetingAspect {
         Object result = null;
 
         try {
-            
-            logger.info("METHOD: " + method + " with the args: " + args);
+
+            logger.info("Around_METHOD: " + method + " with the args: " + args);
             result = proceedingJoinPoint.proceed();
-            logger.info("METHOD:" + method + "with the result" + result);
+            logger.info("Around_METHOD:" + method + "with the result" + result);
 
         } catch (Throwable e) {
 
